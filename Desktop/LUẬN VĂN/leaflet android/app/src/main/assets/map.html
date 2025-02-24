@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--CSS-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+            width: 100vw;
+        }
+        #trackButton {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1000;
+            background-color: white;
+            border: 1px solid black;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .leaflet-control-geosearch {
+            position: absolute;
+            top: 80px;
+            left: 1px;
+            z-index: 1000;
+            background-color: white;
+            border: 2px solid black;
+        }
+        #routingButton {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            z-index: 1000;
+            background-color: white;
+            border: 1px solid black;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        #map {
+            height: 100vh;
+        }
+        .leaflet-bar {
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <button id="trackButton">Bắt đầu theo dõi vị trí</button>
+    <button id="routingButton" class="leaflet-bar">Hiển thị điều hướng</button>
+    <!--script-->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-geosearch@latest/dist/bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script>
+        // Khởi tạo bản đồ
+        var map = L.map('map').setView([10.027254, 105.769806], 15);
+
+        // Thiết lập tile layer từ OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 22,
+        }).addTo(map);
+
+        var userMarker = null;
+        var path = L.polyline([], { color: 'Pink' }).addTo(map);
+
+        var previousPosition = null;
+        var previousTime = null;
+        var lastLocation = { lat: null, lon: null }; // Biến để lưu trữ tọa độ cuối cùng
+        var trackingInterval = null; // Biến để lưu trữ interval của việc theo dõi vị trí
+        var searchMarker = null; // Biến để lưu trữ marker tìm kiếm
+        var routingControl = null; // Biến để lưu trữ điều khiển routing
+
+        // Hàm lấy vị trí hiện tại của người dùng và đặt marker
+        function updatePosition(centerMap) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var lat = position.coords.latitude;
+                    var lon = position.coords.longitude;
+                    var accuracy = position.coords.accuracy;
+                    var currentTime = new Date();
+
+                    // Kiểm tra tọa độ hợp lệ
+                    if (typeof lat !== 'number' || typeof lon !== 'number') {
+                        console.error("Invalid position data:", position);
+                        return;
+                    }
+
+                    // Đặt lại marker người dùng
+                    if (userMarker) {
+                        map.removeLayer(userMarker);
+                    }
+
+                    userMarker = L.marker([lat, lon]).addTo(map)
+                        .bindPopup(`Latitude: ${lat}<br>Longitude: ${lon}<br>Accuracy: ${accuracy} meters`)
+                        .openPopup();
+
+                    // Chỉ đặt lại vị trí trung tâm của bản đồ khi centerMap là true
+                    if (centerMap) {
+                        map.setView([lat, lon], 18);
+                    }
+
+                    // Thêm tọa độ mới vào đường dẫn
+                    path.addLatLng([lat, lon]);
+
+                    // Lưu tọa độ vị trí cuối cùng
+                    lastLocation.lat = lat;
+                    lastLocation.lon = lon;
+                    console.log('Vị trí gần nhất: ', lastLocation);
+
+                    previousPosition = { lat: lat, lon: lon };
+                    previousTime = currentTime;
+                }, function (error) {
+                    console.error("Lỗi lấy vị trí người dùng | Mã lỗi:", error);
+                });
+            } else {
+                alert("Trình duyệt của bạn không hỗ trợ Geolocation.");
+            }
+        }
+
+        // Hàm lấy vị trí hiện tại của người dùng
+        function getCurrentPosition(callback) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    callback(null, L.latLng(position.coords.latitude, position.coords.longitude));
+                }, function (error) {
+                    callback(error, null);
+                });
+            } else {
+                callback(new Error("Trình duyệt của bạn không hỗ trợ Geolocation."), null);
+            }
+        }
+
+        // Gán sự kiện click cho nút "Theo dõi vị trí"
+        document.getElementById('trackButton').addEventListener('click', function () {
+            if (trackingInterval) {
+                clearInterval(trackingInterval); // Dừng việc theo dõi nếu nó đang chạy
+                trackingInterval = null;
+                if (userMarker) {
+                    map.removeLayer(userMarker); // Xóa marker khi dừng theo dõi
+                    userMarker = null;
+                }
+                this.textContent = "Bắt đầu theo dõi vị trí"; // Thay đổi nội dung nút
+            } else {
+                updatePosition(true); // Cập nhật và đặt trung tâm bản đồ ngay lập tức
+                trackingInterval = setInterval(function () {
+                    updatePosition(false);
+                }, 8000); // Bắt đầu theo dõi mỗi 5 giây
+                this.textContent = "Dừng theo dõi vị trí"; // Thay đổi nội dung nút
+
+                // Xóa marker tìm kiếm nếu tồn tại
+                if (searchMarker) {
+                    map.removeLayer(searchMarker);
+                    searchMarker = null;
+                }
+            }
+        });
+
+        // Gán sự kiện click cho nút "Hiển thị điều hướng"
+        document.getElementById('routingButton').addEventListener('click', function () {
+            var button = this;
+            if (routingControl) {
+                map.removeControl(routingControl); // Ẩn điều hướng nếu nó đang hiển thị
+                routingControl = null;
+                button.textContent = "Hiển thị điều hướng"; // Thay đổi nội dung nút
+            } else {
+                getCurrentPosition(function (error, currentLatLng) {
+                    if (error) {
+                        console.error("Lỗi lấy vị trí người dùng | Mã lỗi:", error);
+                        alert("Không thể lấy vị trí hiện tại của bạn. Vui lòng kiểm tra cài đặt vị trí của bạn.");
+                        return;
+                    }
+                    routingControl = L.Routing.control({
+                        waypoints: [
+                            currentLatLng, // Vị trí hiện tại của người dùng
+                        ],
+                        routeWhileDragging: true,
+                        geocoder: L.Control.Geocoder.nominatim()
+                    }).addTo(map);
+                    button.textContent = "Ẩn điều hướng"; // Thay đổi nội dung nút
+                });
+            }
+        });
+
+        // Thêm thanh tìm kiếm vào bản đồ
+        const provider = new window.GeoSearch.OpenStreetMapProvider();
+
+        const searchControl = new window.GeoSearch.GeoSearchControl({
+            notFoundMessage: 'Xin lỗi, vị trí của bạn hiện không khả dụng',
+            provider: provider,
+            style: 'button',
+            autoComplete: true,
+            autoCompleteDelay: 250,
+            showMarker: false, // Không tự động hiển thị marker, sẽ tự quản lý marker
+            updateMap: true, // Tự động cập nhật vị trí bản đồ khi tìm kiếm
+            keepResult: true, // Giữ kết quả tìm kiếm
+            searchLabel: 'Tìm kiếm vị trí...',
+        });
+
+        map.addControl(searchControl);
+
+        // Lắng nghe sự kiện kết quả tìm kiếm
+        map.on('geosearch/showlocation', function (event) {
+            // Kiểm tra tọa độ hợp lệ
+            if (event.location && event.location.x && event.location.y) {
+                // Chuyển đổi x, y thành lat, lng
+                var latlng = {
+                    lat: event.location.y,
+                    lng: event.location.x
+                };
+
+                // Xóa marker tìm kiếm hiện tại nếu tồn tại
+                if (searchMarker) {
+                    map.removeLayer(searchMarker);
+                }
+
+                // Thêm marker mới cho vị trí tìm kiếm
+                searchMarker = L.marker(latlng).addTo(map)
+                    .bindPopup(event.location.label)
+                    .openPopup();
+            } else {
+                console.error("Invalid search location data:", event.location);
+            }
+        });
+    </script>
+</body>
+</html>

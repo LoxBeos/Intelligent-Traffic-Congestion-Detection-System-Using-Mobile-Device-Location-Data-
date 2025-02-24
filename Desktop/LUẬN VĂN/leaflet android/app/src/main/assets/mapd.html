@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        #map { height: 100vh; }
+        #info { padding: 8px; background: white; position: absolute; top: 10px; left: 10px; z-index: 1000; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="info">Location info will be displayed here.</div>
+
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13); // Default view
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var marker = L.marker([51.505, -0.09]).addTo(map); // Default marker
+
+        // Function to update location on map
+        function updateLocation(latitude, longitude, speed) {
+            var newLatLng = new L.LatLng(latitude, longitude);
+            marker.setLatLng(newLatLng);
+            map.setView(newLatLng, 13);
+
+            var info = `Latitude: ${latitude}, Longitude: ${longitude}, Speed: ${speed.toFixed(2)} km/h`;
+            document.getElementById('info').innerHTML = info;
+        }
+
+        // Function to update address info
+        function updateAddress(address) {
+            var infoElement = document.getElementById('info');
+            var info = infoElement.innerHTML;
+            info += `<br>Address: ${address}`;
+            infoElement.innerHTML = info;
+        }
+    </script>
+</body>
+</html>
