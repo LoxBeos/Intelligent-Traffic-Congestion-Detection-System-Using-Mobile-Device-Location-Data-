@@ -1,0 +1,318 @@
+/* Reset and base styles */
+html, body {
+    height: 100%;
+    width: 100vw;
+    padding: 0;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+#map {
+    height: 100%;
+    width: 100vw;
+}
+
+/* Buttons */
+#trackButton, #routingButton {
+    position: absolute;
+    z-index: 1000;
+    background-color: white;
+    border: 2px solid black;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px rgba(184, 103, 11, 0.1);
+    user-select: none;
+    transition: background-color 0.3s, transform 0.5s;
+    font-size: 24px;
+    bottom: 4px;
+}
+
+#trackButton {
+    right: 10px;
+    margin-right: 8px;
+    background: orange;
+}
+
+#routingButton {
+    left: 10px;
+    margin-left: 8px;
+    background: #ffa500;
+}
+
+#trackButton:hover, #routingButton:hover,#reportButton:hover{
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}
+#reportButton { 
+    left: 10px;
+    margin-left: 8px;
+    background: #ffa500;
+}
+#fa-solid-crosshairs, #fa-signs-post {
+    margin-top: 18px;
+    display: flex; 
+    align-items: center;
+}
+#reportButton {
+    position: absolute;
+    z-index: 1000;
+    background-color: #ffa500;
+    border: 2px solid black;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px rgba(184, 103, 11, 0.1);
+    user-select: none;
+    transition: background-color 0.3s, transform 0.5s;
+    font-size: 24px;
+    left: 50%;
+    bottom: 4px;
+}
+
+/* GeoSearchControl customization */
+.leaflet-control-geosearch {
+    width: 90%; 
+    max-width: 600px;
+    height: auto;
+    padding: 8px;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color: #f8f8f8;
+    border: 2px solid #ccc;
+    color: #333;
+    font-size: 18px;
+    font-family: Arial, sans-serif;
+    border-radius: 4px;
+}
+
+.leaflet-control-geosearch input {
+    width: 100%;
+    font-size: 16px;
+}
+
+.leaflet-control-geosearch .results {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.leaflet-control-geosearch .geosearch-bar {
+    background-color: #fff;
+    color: #333;
+    padding: 8px 12px;
+    border-radius: 4px;
+    box-shadow: none;
+}
+
+.leaflet-control-geosearch .geosearch-bar::placeholder {
+    color: #999;
+}
+
+.leaflet-control-geosearch .geosearch-bar:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.leaflet-control-geosearch .geosearch-submit {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 8px 12px;
+}
+
+.leaflet-control-geosearch .geosearch-submit:hover {
+    background-color: #0056b3;
+}
+
+.leaflet-control-geosearch .geosearch-results {
+    background-color: #fff;
+    color: #333;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.leaflet-control-geosearch .geosearch-result {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.leaflet-control-geosearch .geosearch-result:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+/* Leaflet's zoom buttons */
+.leaflet-control-zoom a {
+    background-color: #ffa500;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+}
+
+.leaflet-control-zoom a:hover {
+    background-color: #e59400;
+    color: #fff;
+}
+
+.leaflet-control-zoom {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Leaflet Routing Machine container */
+.leaflet-routing-container {
+    width: 90%;
+    max-width: 600px;
+    max-height: 400px;
+    overflow: hidden;
+    padding: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.leaflet-routing-alt {
+    max-height: 50%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.leaflet-routing-geocoder {
+    font-size: 14px;
+    padding: 10px;
+}
+
+.leaflet-routing-container .leaflet-bar {
+    box-shadow: none;
+}
+
+.leaflet-routing-container .leaflet-routing-alt {
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    background-color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.theme-toggle:hover {
+    background-color: #f0f0f0;
+}
+
+/* Dark theme styles */
+body.dark-theme #reportButton {
+    background-color: #444;
+    color: #fff;
+    border-color: #666;
+    
+}
+
+body.dark-theme #reportButton:hover {
+    background-color: #555;
+}
+body.dark-theme {
+    background-color: #333;
+    color: #fff;
+    
+}
+
+body.dark-theme #map {
+    filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+body.dark-theme .leaflet-control-zoom a,
+body.dark-theme .leaflet-control-geosearch form,
+body.dark-theme #trackButton,
+body.dark-theme #routingButton,
+body.dark-theme .theme-toggle {
+    background-color: #444;
+    color: #fff;
+    border-color: #666;
+}
+
+body.dark-theme .leaflet-control-zoom a:hover,
+body.dark-theme #trackButton:hover,
+body.dark-theme #routingButton:hover,
+body.dark-theme .theme-toggle:hover {
+    background-color: #555;
+}
+
+body.dark-theme .leaflet-control-geosearch form input {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Dark theme styles for Leaflet Routing Machine */
+body.dark-theme .leaflet-routing-container,
+body.dark-theme .leaflet-routing-container * {
+    color: #fff;
+    background-color: #444;
+}
+
+body.dark-theme .leaflet-routing-geocoder {
+    background-color: #333;
+    color: #fff;
+}
+
+body.dark-theme .leaflet-routing-alt {
+    background-color: #333;
+    color: #fff;
+    border-color: #666;
+}
+
+body.dark-theme .leaflet-routing-alt .leaflet-routing-alt-link {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    #trackButton, #routingButton, .leaflet-control-geosearch {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .leaflet-control-geosearch {
+        top: 60px;
+        left: 10px;
+    }
+
+    .theme-toggle {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+    }
+
+    /* Leaflet Routing Machine container adjustment for small screens */
+    .leaflet-routing-container {
+        font-size: 13px;
+        padding: 5px;
+    }
+
+    .leaflet-routing-geocoder {
+        margin: 0;
+    }
+
+    .leaflet-routing-alt {
+        max-height: 40%;
+    }
+}

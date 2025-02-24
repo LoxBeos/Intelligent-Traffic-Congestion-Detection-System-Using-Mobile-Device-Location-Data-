@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="node_modules/leaflet-geosearch/dist/geosearch.css">
+    <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css">
+    <link rel="stylesheet" href="node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css">
+    <link rel="stylesheet" href="node_modules/leaflet-control-geocoder/dist/Control.Geocoder.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <title>Leaflet Map</title>
+</head>
+<body>
+    <div id="map"></div>
+    <button id="trackButton">
+        <i class="fa-solid fa-location-crosshairs"></i>
+    </button>
+    <button id="routingButton">
+        <i class="fa-solid fa-signs-post"></i>
+    </button>  
+    <button id="themeToggle" class="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </button>  
+    <button id="reportButton">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+    </button>
+    <script type="module" src="./src/index.js"></script>
+</body>
+</html>
