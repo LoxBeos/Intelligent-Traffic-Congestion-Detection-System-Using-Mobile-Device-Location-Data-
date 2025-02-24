@@ -1,14 +1,4 @@
 {
-    "type": "service_account",
-    "project_id": "mymaps-e8396",
-    "private_key_id": "8335ea3c2f9bc41e80a4a7b59d82137fde23936b",
-    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCp4a7HFsP2HCK7\nEGXfOKVZWRatj/QMSRniXBz8YiGNupaIQWAbZ4VBz7smh7bOi09P/Xe+9L7qmIFa\ns0a54wCdoGw2sGsc7OqAtYNBgmYp0R6imqHzEM6lp9JT4Ccz7sV//4sOG66mwPLQ\nYMdutjjObyMWAvnuX8EZodoqSpwESnOuPqCAEnA7YazpSJdHk4mlI1kvgjW695B3\nF7zbNXAkvQ0VTYQ4Lt0ccBbWAyNjFxV2V6hjZTaMgYpk3iwkmek4ULNU/OhKH8oC\nls/Htp5JJI5bK2/MGh6l6yPI1q70dporAeHR0CcUO+HnNiP/c5SnPyPbWTIdwmr7\nU/rphSEfAgMBAAECggEABBqvDaGf1mBTo8//m2b+R6xT/0QiZ0bqLdfVM3EY0m3B\nmUUgZ0kW+my5tB1EmLTbk658qCENmRQE0Vt8x/I+CjuH9xedXt4ybthJIC9gUdOl\njn7MjtdxxqVz+rwdoQQ8bUflOiVdENZJ3NLvE95UfQLzsWJyW1n2NlenXQI0cWi4\n937YFOQgBdl9H1oYC+hZUzj9rGedrvhiY4LwEVEKdKcyMl3QdYQnIhuNpd1o81Wf\n+N42/pNEz6z4x08UCpfr9cBB5ZSarF8JueXRrICCXBdFRzbWnywDXlGId08ew5AP\nlflfA3plzLC+EZzcEywG2smgNMwxCIend4uvB/AXAQKBgQDfo12kjYBs3/tyYWDE\nZ4ZLbaFfK4bLkT+gnmEvx/jVGKFDuvADiwZ6AVZUtIy0qs0AYMoS/DK6kyrIJV0M\njF0NdKBFY38ED2a+pH26FlEOI9YkkdLMGhUGzJP6XS7UoDMtn/y1sRJcrkcxA3xR\nYRQrDjppMwYlXVMbTecOiLMXQQKBgQDCduobW2qFrbi++duiC9utF/trE55gzFyi\nlA1jwCrbcnUBsJhUe7D1jLUfWtnl7CafusObviQIKcV+MAF/ePwYZR9m2v2UvRZE\nPKYkhBh2SXm9Ix20gkY36qgXtvWqQJ7AZckwhIq1GHmwL3WkeskmUC7SaRhwjk8w\nw3GuPq+AXwKBgEp2PY61oqYdqb462BptEdT5irqCZp5PHW1gbqGXJq3lRoSjsJit\naJmk6lbHyvW4zQssLvxFRqrCp4L+lc3AypbZVyfjaf4zFpWxdT9JgPGBUyLX/uUA\nZjHeWgMJlbcsI/4z/9OLQr7jNEcIjxMVjL6NPTubxpcYTLyRorY/I8pBAoGAD/U2\nLNyJl0K0QGe8kEWs1z16kkTf4E2k5GqF1sO0QKHZ3DOjrHsiAGR1kIciDm4clUr8\nNlGaH1leLYa++Ljy5wWVWBlsacJCi4L2l1SHtV0+MjkpfOCb5obJGHkZG8mFvYAc\nzHBz+Xxyr/SVENRKoWw/C2E4cjQbZ4MCVywptr0CgYAK5pHxEkYbT1p4C7DG/TrM\nwE9wotOsKId4xtdTd7cDXDPPq/YL8/dmm3u/oRy+xHvJ68958KQPr5JuNfkBHZs5\na/wRUaT6aa4nHM3HftPZc+aNHlftUOmNd20F9DWYOMGqWWAIuXtMTIxaROMFg4T0\nbarQy6w6U6LN3OBuzcqQoA==\n-----END PRIVATE KEY-----\n",
-    "client_email": "firebase-adminsdk-vzq1z@mymaps-e8396.iam.gserviceaccount.com",
-    "client_id": "103794551962754238804",
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-vzq1z%40mymaps-e8396.iam.gserviceaccount.com",
-    "universe_domain": "googleapis.com"
+your config API here
   }
   
